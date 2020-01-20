@@ -2,6 +2,10 @@
   "name": "mock-graphql-cypress",
   "version": "1.0.0",
   "description": "cypress command to mock a GraphQL API",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garytryan/mock-graphql-cypress.git"
+  },
   "main": "src/index.js",
   "author": "Gary Ryan <gary.thomas.ryan@gmail.com>",
   "license": "MIT",
