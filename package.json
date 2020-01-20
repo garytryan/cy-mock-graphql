@@ -1,5 +1,5 @@
 {
-  "name": "mock-graphql-cypress",
+  "name": "cy-mock-graphql",
   "version": "1.0.0",
   "description": "cypress command to mock a GraphQL API",
   "repository": {

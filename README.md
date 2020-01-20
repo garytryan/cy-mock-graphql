@@ -2,10 +2,10 @@
 
 ## Installation
 ```
-npm install mock-graphql-cypress
+npm install cy-mock-graphql
 ```
 ```
-yarn add mock-graphql-cypress
+yarn add cy-mock-graphql
 ```
 
 ### Usage
