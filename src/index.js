@@ -1,6 +1,6 @@
 
-import { mockServer } from 'graphql-tools'
-import { buildClientSchema } from 'graphql'
+const { mockServer } = require('graphql-tools')
+const { buildClientSchema } = require('graphql')
 
 Cypress.Commands.add('mockGraphQL', (schema, mock = {}, options = { endpoint: '/graphql' }) => {
   const originalFetch = window.fetch
