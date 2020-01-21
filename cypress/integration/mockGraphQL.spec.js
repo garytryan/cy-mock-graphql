@@ -1,4 +1,7 @@
 import { buildSchema, graphqlSync, introspectionQuery } from 'graphql'
+import ApolloClient from 'apollo-boost'
+import gql from 'graphql-tag'
+
 
 const schema = `
 type Person {
@@ -18,7 +21,7 @@ const mock = {
     people: () => ([
       {
         firstname: 'Gary',
-        surname: 'Ryan'
+        surname: 'Ryan',
       }
     ])
   })
@@ -44,7 +47,7 @@ describe('Accepts schema string', () => {
       data: {
         people: [{
           firstname: 'Gary',
-          surname: 'Ryan'
+          surname: 'Ryan',
         }]
       }
     })
@@ -88,6 +91,35 @@ describe('Accepts endpoint option', () => {
           surname: 'Ryan'
         }]
       }
+    })
+  })
+
+})
+
+describe('Supports Apollo', () => {
+  beforeEach(() => cy.mockGraphQL(schema, mock))
+
+
+  it('is ok', async () => {
+    const client = new ApolloClient()
+
+    const response = await client.query({
+      query: gql`
+        query GetPeople {
+          people {
+            firstname
+            surname
+          }
+        }
+      `
+    })
+
+    expect(response.data).to.deep.equal({
+      people: [{
+        __typename: 'Person',
+        firstname: 'Gary',
+        surname: 'Ryan'
+      }]
     })
   })
 })
