@@ -66,3 +66,13 @@ describe('Supports Apollo', () => {
     cy.contains('Gary Ryan')
   })
 })
+
+describe('Supports Apollo Batch', () => {
+  beforeEach(() => cy.mockGraphQL(schema, mock))
+
+  it('is ok', () => {
+    cy.visit('http://localhost:3000/')
+    cy.contains('Apollo Batch').click()
+    cy.contains('Gary Ryan')
+  })
+})

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import ApolloClient, { gql } from 'apollo-boost';
+import ApolloBoostClient, { gql, ApolloClient, InMemoryCache } from 'apollo-boost';
+import { BatchHttpLink } from "apollo-link-batch-http"
 
-const client = new ApolloClient({ uri: '/graphql' })
+const clientBoostClient = new ApolloBoostClient({ uri: '/graphql' })
+
+const clientWithBatching = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new BatchHttpLink({ uri: "/graphql" })
+})
 
 function App() {
   const [people, setPeople] = useState([])
@@ -35,7 +41,7 @@ function App() {
   }
 
   const onApollo = () => {
-    client.query({
+    clientBoostClient.query({
       query: gql`
           query GetPeople {
             people {
@@ -50,12 +56,31 @@ function App() {
       })
   }
 
+  const onApolloBatch = () => {
+    clientWithBatching.query({
+      query: gql`
+          query GetPeople {
+            people {
+              firstname
+              surname
+            }
+          }
+        `
+    })
+      .then(({ data: { people }, errors }) => {
+        setPeople(people)
+        console.log('ERROR', errors)
+      })
+      .catch(error => console.log('ERROR', error))
+  }
+
   return (
     <div className="App">
       <h1>Cy Mock GraphQL Test App</h1>
       <button onClick={onFetch}>Fetch</button>
       <button onClick={onFetchWithCustomEndpoint}>Fetch with custom endpoint</button>
       <button onClick={onApollo}>Apollo</button>
+      <button onClick={onApolloBatch}>Apollo Batch</button>
       {people.map(({ firstname, surname }, i) => <div key={i}>{firstname} {surname}</div>)}
     </div>
   );

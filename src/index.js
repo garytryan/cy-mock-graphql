@@ -15,20 +15,18 @@ const mockGraphQL = (win, schema, mock, options) => {
 
       if (args[1]) {
         method = args[1].method || 'POST'
-        body = args[1].body
+        body = JSON.parse(args[1].body)
       }
     } else {
       url = args[0].url
       method = args[0].method || 'POST'
-      body = args[0].body
+      body = JSON.parse(args[0].body)
     }
 
     if (
       url === options.endpoint &&
       method === 'POST'
     ) {
-
-      const query = JSON.parse(body).query
 
       if (
         typeof schema === 'object' &&
@@ -37,13 +35,22 @@ const mockGraphQL = (win, schema, mock, options) => {
         schema = buildClientSchema(schema.data)
       }
 
-      return mockServer(schema, mock)
-        .query(query)
-        .then(result => ({
-          json: () => Promise.resolve(result),
-          text: () => Promise.resolve(JSON.stringify(result)),
-          ok: true
-        }))
+      const server = mockServer(schema, mock)
+
+      let result
+      if (Array.isArray(body)) {
+        result = Promise.all(body.map(({ query, variables }) =>
+          server.query(query, variables)
+        ))
+      } else {
+        result = mockServer(schema, mock).query(body.query, body.variables)
+      }
+
+      return result.then(result => ({
+        json: () => Promise.resolve(result),
+        text: () => Promise.resolve(JSON.stringify(result)),
+        ok: true
+      }))
 
     }
 
