@@ -2,17 +2,13 @@
 const { mockServer } = require('graphql-tools')
 const { buildClientSchema } = require('graphql')
 
-Cypress.Commands.add('mockGraphQL', (schema, mock = {}, options = { endpoint: '/graphql' }) => {
-  /*
-  Stub Fetch API
-  */
+const mockGraphQL = (win, schema, mock, options) => {
   const originalFetch = window.fetch
 
   const fetch = (...args) => {
     let url = ''
     let method = ''
     let body
-
 
     if (typeof args[0] === 'string') {
       url = args[0]
@@ -54,6 +50,14 @@ Cypress.Commands.add('mockGraphQL', (schema, mock = {}, options = { endpoint: '/
     return originalFetch.apply(null, args)
   }
 
-  cy.stub(window, 'fetch', fetch).as('mockGraphQL')
+  if (win.fetch.restore) {
+    win.fetch.restore()
+  }
+
+  cy.stub(win, 'fetch', fetch).as('mockGraphQL')
+}
+
+Cypress.Commands.add('mockGraphQL', (schema, mock = {}, options = { endpoint: '/graphql' }) => {
+  Cypress.on('window:before:load', win => mockGraphQL(win, schema, mock, options))
 })
 
