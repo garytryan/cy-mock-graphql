@@ -11,21 +11,21 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "cd test_app && yarn start",
+    "start": "cd test_app && yarn && yarn start",
     "test": "cypress run",
-    "ci": "start-server-and-test http://localhost:3000/"
+    "ci": "(cd test_app && yarn) && start-server-and-test http://localhost:3000/"
   },
   "dependencies": {
-    "graphql": "^14.5.8",
-    "graphql-tools": "^4.0.6"
+    "graphql": "^14.6.0",
+    "graphql-tools": "^4.0.7"
   },
   "peerDependencies": {
     "cypress": "^3.8.2"
   },
   "devDependencies": {
     "apollo-boost": "^0.4.7",
-    "cypress": "^3.8.2",
-    "graphql-tag": "^2.10.1",
-    "start-server-and-test": "^1.10.7"
+    "cypress": "^4.2.0",
+    "graphql-tag": "^2.10.3",
+    "start-server-and-test": "^1.10.11"
   }
 }

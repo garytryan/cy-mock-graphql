@@ -68,5 +68,12 @@ mockGraphQL(schema, mock, options)
 
   - endpoint: specifiy the graphql endpoint
 
+## Contributing
+
+    git clone ...
+
+    yarn
+    yarn ci
+
 #### License
 MIT
