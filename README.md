@@ -23,12 +23,12 @@ type Query {
 
 #### myCypressTest.spec.js
 ```
-import mockGraphQL from 'cypress-mock-graphql'
+import mockGraphQL from 'cy-mock-graphql'
 import schema from 'schema.gql'
 
 describe('My Cypress Test', () => {
   beforeEach(() => {
-    mockGraphQL(schema, {
+    cy.mockGraphQL(schema, {
       Query: {
         people: () => ([
           {
