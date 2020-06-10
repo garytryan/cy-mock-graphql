@@ -29,14 +29,14 @@ import schema from 'schema.gql'
 describe('My Cypress Test', () => {
   beforeEach(() => {
     cy.mockGraphQL(schema, {
-      Query: {
+      Query: () => ({
         people: () => ([
           {
             firstname: 'Gary',
             surname: 'Ryan'
           }
         ])
-      }
+      })
     })
   })
 
