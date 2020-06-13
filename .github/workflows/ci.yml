@@ -13,7 +13,16 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
       - run: cd test_app && yarn install
+  
       - name: Cypress
         uses: cypress-io/github-action@v1
         with:
           start: yarn start
+          
+      - name: Relese
+      - if: github.event.pull_request.merged == true
+      - uses: actions/checkout@v1
+      - uses: mikeal/merge-release@v4.0.7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
