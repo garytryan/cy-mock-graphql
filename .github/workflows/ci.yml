@@ -20,7 +20,7 @@ jobs:
           start: yarn start
           
       - name: Relese
-      - if: github.event.pull_request.merged == true
+        if: github.event.pull_request.merged == true
         uses: mikeal/merge-release@v4.0.7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
