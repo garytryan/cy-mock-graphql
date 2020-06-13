@@ -20,7 +20,7 @@ jobs:
           start: yarn start
 
       - name: Release
-        if: github.event.push == true
+        if: ${{ github.event_name == 'push' }}
         uses: mikeal/merge-release@v4.0.7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
