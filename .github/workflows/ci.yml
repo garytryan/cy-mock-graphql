@@ -19,8 +19,8 @@ jobs:
         with:
           start: yarn start
 
-      - name: Releseß
-        if: github.event.pull_request.push == true
+      - name: Release
+        if: github.event.push == true
         uses: mikeal/merge-release@v4.0.7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
