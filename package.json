@@ -13,7 +13,7 @@
   "scripts": {
     "start": "cd test_app && yarn && yarn start",
     "test": "cypress run",
-    "ci": "(cd test_app && yarn) && start-server-and-test http://localhost:3000/"
+    "ci": "(cd test_app && yarn) && start-server-and-test 'yarn start' 3000 'yarn test'"
   },
   "dependencies": {
     "graphql": "^14.6.0",
